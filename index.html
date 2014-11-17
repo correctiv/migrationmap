@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title></title>
+    <style media="screen">
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      #image {
+        width: 620px;
+        height: 620px;
+      }
+      .clicktarget {
+        position: absolute;
+        cursor: pointer;
+        width: 60px;
+        height: 25px;
+      }
+      #portugal {
+        left: 47px;
+        top: 449px;
+      }
+      #spain {
+        left: 160px;
+        top: 480px;
+      }
+      #italy {
+        left: 344px;
+        top: 427px;
+      }
+      #greece {
+        left: 497px;
+        top: 541px;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="image" src="images/00_Karte_Plain.jpg" alt="Europa"/>
+    <div class="clicktarget" id="portugal"></div>
+    <div class="clicktarget" id="greece"></div>
+    <div class="clicktarget" id="spain"></div>
+    <div class="clicktarget" id="italy"></div>
+    <script charset="utf-8">
+      var currentCountry = null;
+      var background = document.getElementById('image');
+      var setupClickTarget = function(elementId, image) {
+        var country = document.getElementById(elementId);
+        country.style.display = 'block';
+        country.onmouseover = function(){
+          background.src = 'images/' + image + '_Mouseover.jpg';
+        };
+        country.onmouseout = function() {
+          background.src = 'images/00_Karte_Plain.jpg';
+        };
+        country.onclick = function(){
+          if (currentCountry === null) {
+            currentCountry = country;
+            country.onmouseout = null;
+            country.onmouseover = null;
+            var countries = document.getElementsByClassName('clicktarget');
+            for (var i = 0; i < countries.length; i++) {
+              countries[i].style.display = 'none';
+            }
+            country.style.display = 'block';
+            background.src = 'images/' + image + '_Click.jpg';
+          } else {
+            currentCountry = null;
+            background.src = 'images/00_Karte_Plain.jpg';
+            setupClickTarget('portugal', '01_Portogal');
+            setupClickTarget('greece', '04_Griechenland');
+            setupClickTarget('spain', '02_Spanien');
+            setupClickTarget('italy', '03_Italien');
+          }
+        }
+      };
+      setupClickTarget('portugal', '01_Portogal');
+      setupClickTarget('greece', '04_Griechenland');
+      setupClickTarget('spain', '02_Spanien');
+      setupClickTarget('italy', '03_Italien');
+    </script>
+  </body>
+</html>

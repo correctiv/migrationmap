@@ -44,6 +44,7 @@
       var currentCountry = null;
       var background = document.getElementById('image');
       var setupClickTarget = function(elementId, image) {
+        background.onclick = null;
         var country = document.getElementById(elementId);
         country.style.display = 'block';
         country.onmouseover = function(){
@@ -63,6 +64,7 @@
             }
             country.style.display = 'block';
             background.src = 'images/' + image + '_Click.jpg';
+            background.onclick = country.onclick;
           } else {
             currentCountry = null;
             background.src = 'images/00_Karte_Plain.jpg';

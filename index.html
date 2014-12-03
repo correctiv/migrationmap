@@ -40,6 +40,27 @@
     <div class="clicktarget" id="greece"></div>
     <div class="clicktarget" id="spain"></div>
     <div class="clicktarget" id="italy"></div>
+
+    <audio id="portugal-audio">
+      <source src="audio/portugal.ogg" type="audio/ogg" />
+      <source src="audio/portugal.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="greece-audio">
+      <source src="audio/greece.ogg" type="audio/ogg" />
+      <source src="audio/greece.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="spain-audio">
+      <source src="audio/spain.ogg" type="audio/ogg" />
+      <source src="audio/spain.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="italy-audio">
+      <source src="audio/italy.ogg" type="audio/ogg" />
+      <source src="audio/italy.mp3" type="audio/mpeg" />
+    </audio>
+
     <script charset="utf-8">
       var currentCountry = null;
       var background = document.getElementById('image');
@@ -65,6 +86,7 @@
             country.style.display = 'block';
             background.src = 'images/' + image + '_Click.jpg';
             background.onclick = country.onclick;
+            playAudio(elementId)
           } else {
             currentCountry = null;
             background.src = 'images/00_Karte_Plain.jpg';
@@ -72,13 +94,30 @@
             setupClickTarget('greece', '04_Griechenland');
             setupClickTarget('spain', '02_Spanien');
             setupClickTarget('italy', '03_Italien');
+            stopAudio()
           }
         }
       };
+
+      function stopAudio() {
+        var audios = document.getElementsByTagName('audio');
+        for (var i = 0; i < audios.length; i++) {
+          audios[i].pause();
+        }
+      }
+
+      function playAudio(fileId) {
+        var audio = document.getElementById(fileId + '-audio');
+        audio.volume = 0.5;
+        audio.currentTime = 0;
+        audio.play();
+      }
+
       setupClickTarget('portugal', '01_Portogal');
       setupClickTarget('greece', '04_Griechenland');
       setupClickTarget('spain', '02_Spanien');
       setupClickTarget('italy', '03_Italien');
+
     </script>
   </body>
 </html>

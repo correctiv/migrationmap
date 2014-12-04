@@ -62,6 +62,7 @@
     </audio>
 
     <script charset="utf-8">
+      var soundOn = document.location.search.indexOf('nosound') == -1
       var currentCountry = null;
       var background = document.getElementById('image');
       var setupClickTarget = function(elementId, image) {
@@ -86,7 +87,7 @@
             country.style.display = 'block';
             background.src = 'images/' + image + '_Click.jpg';
             background.onclick = country.onclick;
-            playAudio(elementId)
+            if (soundOn) playAudio(elementId);
           } else {
             currentCountry = null;
             background.src = 'images/00_Karte_Plain.jpg';

@@ -62,32 +62,35 @@
     </audio>
 
     <script charset="utf-8">
-      var soundOn = document.location.search.indexOf('nosound') == -1
+      var soundOn = document.location.search.indexOf('nosound') == -1;
       var currentCountry = null;
       var background = document.getElementById('image');
-      var setupClickTarget = function(elementId, image) {
+
+      function setupClickTarget(elementId, image) {
         background.onclick = null;
         var country = document.getElementById(elementId);
         country.style.display = 'block';
-        country.onmouseover = function(){
+
+        country.onmouseover = function() {
           background.src = 'images/' + image + '_Mouseover.jpg';
-        };
+        }
+
         country.onmouseout = function() {
           background.src = 'images/00_Karte_Plain.jpg';
-        };
-        country.onclick = function(){
+        }
+
+        country.onclick = function() {
           if (currentCountry === null) {
             currentCountry = country;
             country.onmouseout = null;
             country.onmouseover = null;
-            var countries = document.getElementsByClassName('clicktarget');
-            for (var i = 0; i < countries.length; i++) {
-              countries[i].style.display = 'none';
-            }
-            country.style.display = 'block';
             background.src = 'images/' + image + '_Click.jpg';
             background.onclick = country.onclick;
-            if (soundOn) playAudio(elementId);
+            showClickTarget(country)
+
+            if (soundOn) {
+              playAudio(elementId);
+            }
           } else {
             currentCountry = null;
             background.src = 'images/00_Karte_Plain.jpg';
@@ -98,7 +101,19 @@
             stopAudio()
           }
         }
-      };
+      }
+
+      function showClickTarget(country) {
+        hideClickTargets();
+        country.style.display = 'block';
+      }
+
+      function hideClickTargets() {
+        var countries = document.getElementsByClassName('clicktarget');
+        for (var i = 0; i < countries.length; i++) {
+          countries[i].style.display = 'none';
+        }
+      }
 
       function stopAudio() {
         var audios = document.getElementsByTagName('audio');

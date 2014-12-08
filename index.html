@@ -1,13 +1,25 @@
 <html>
   <head>
     <title>Migration Map</title>
+    <meta charset="utf-8">
     <style media="screen">
       html, body {
         margin: 0;
         padding: 0;
         width: 620px;
         height: 620px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         position: relative;
+      }
+      h1 {
+        font-size: 24px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 500;
+        color: #29ae9a;
+      }
+      a {
+        color: #ff6166;
       }
       #image {
         width: 100%;
@@ -50,6 +62,46 @@
       #volume.off {
         background-position: 0 30px;
       }
+      #info {
+        position: absolute;
+        bottom: 15px;
+        left: 50px;
+      }
+      #modal {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      #backdrop {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      #close {
+        position: absolute;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 20px;
+        color: #999;
+        right: 10px;
+        top: 10px;
+        font-weight: 500;
+      }
+      .info-box {
+        background: white;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 20px;
+        z-index: 1;
+      }
     </style>
   </head>
 
@@ -81,13 +133,61 @@
       <source src="audio/italy.mp3" type="audio/mpeg" />
     </audio>
 
+    <a href="#info-box" id="info">Informationen zur Karte</a>
+
+    <div id="modal">
+      <div class="info-box">
+
+        <h1>Generation E – von Süd nach Nord</h1>
+
+        <p>
+          Die Pfeile repräsentieren die Wanderungsbewegungen der südeuropäischen
+          Migranten der vergangenen Jahre. Je dicker der Pfeil, desto mehr
+          Migranten.
+        </p>
+
+        <p>
+          Die Daten sind nicht repräsentativ, sondern wurden über den Fragebogen
+          des Projektes Generation E gesammelt. Helfen Sie uns, mehr Daten und
+          Geschichten zu sammeln unter <a target="_blank" href="http://generatione.eu">generatione.eu</a>.
+        </p>
+
+        <p>
+          <b>Illustration:</b> Nick Böse
+        </p>
+
+        <p>
+          <b>Umsetzung der Karte:</b> Stefan Wehrmeyer / Simon Jockers,
+          <a target="_blank" href="http://correctiv.org">CORRECT!V</a>
+        </p>
+
+        <a target="_blank" href="http://www.correctiv.org/impressum/">Impressum</a>
+
+        <div id="close">X</div>
+      </div>
+      <div id="backdrop"></div>
+    </div>
+
     <script charset="utf-8">
       var soundOn = document.location.search.indexOf('nosound') == -1;
       var currentCountry = null;
+
       var background = document.getElementById('image');
       var volumeToggle = document.getElementById('volume');
+      var infoButton = document.getElementById('info');
+      var modal = document.getElementById('modal');
+      var backdrop = document.getElementById('backdrop');
+      var close = document.getElementById('close');
 
       updateVolumeToggle(soundOn);
+
+      close.onclick = hideModal;
+      backdrop.onclick = hideModal;
+
+      infoButton.onclick = function(event) {
+        event.preventDefault();
+        showModal()
+      }
 
       volumeToggle.onclick = function() {
         soundOn = !soundOn;
@@ -159,6 +259,14 @@
 
       function updateVolumeToggle(volumeIsOn) {
         volumeToggle.className = volumeIsOn ? 'on' : 'off'
+      }
+
+      function hideModal() {
+        modal.style.display = 'none';
+      }
+
+      function showModal() {
+        modal.style.display = 'block';
       }
 
       setupClickTarget('portugal', '01_Portogal');

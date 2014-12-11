@@ -1,0 +1,8 @@
+# Site settings
+title: "Generation E: Migration Map"
+description: "Generation E – from South to North: This map shows migration movements of Southern Europeans over the last years."
+baseurl: "/migrationmap/" # the subpath of your site, e.g. /blog/
+url: "http://correctiv.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
